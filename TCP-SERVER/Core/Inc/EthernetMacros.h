@@ -8,7 +8,7 @@
 #ifndef INC_ETHERNETMACROS_H_
 #define INC_ETHERNETMACROS_H_
 
-#define SendBufLength   5000
+#define SendBufLength   50000
 #define HalfSendBufLength   2000
 
 #endif /* INC_ETHERNETMACROS_H_ */

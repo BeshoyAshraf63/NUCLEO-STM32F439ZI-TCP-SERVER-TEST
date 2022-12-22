@@ -54,9 +54,9 @@
 /*----- Value in opt.h for MEM_ALIGNMENT: 1 -----*/
 #define MEM_ALIGNMENT 4
 /*----- Default Value for MEM_SIZE: 1600 ---*/
-#define MEM_SIZE 15*1024
+#define MEM_SIZE 110*1024
 /*----- Default Value for MEMP_NUM_TCP_SEG: 16 ---*/
-#define MEMP_NUM_TCP_SEG 39
+#define MEMP_NUM_TCP_SEG 374
 /*----- Default Value for MEMP_NUM_DNS_API_MSG: 8 ---*/
 #define MEMP_NUM_DNS_API_MSG 0
 /*----- Default Value for PBUF_POOL_SIZE: 16 ---*/
@@ -68,9 +68,9 @@
 /*----- Value in opt.h for LWIP_DNS_SECURE: (LWIP_DNS_SECURE_RAND_XID | LWIP_DNS_SECURE_NO_MULTIPLE_OUTSTANDING | LWIP_DNS_SECURE_RAND_SRC_PORT) -*/
 #define LWIP_DNS_SECURE 7
 /*----- Default Value for TCP_WND: 2144 ---*/
-#define TCP_WND 2114
+#define TCP_WND 1072
 /*----- Default Value for TCP_SND_BUF: 1072 ---*/
-#define TCP_SND_BUF 5120
+#define TCP_SND_BUF 50000
 /*----- Value in opt.h for LWIP_NETIF_LINK_CALLBACK: 0 -----*/
 #define LWIP_NETIF_LINK_CALLBACK 1
 /*----- Value in opt.h for LWIP_NETCONN: 1 -----*/

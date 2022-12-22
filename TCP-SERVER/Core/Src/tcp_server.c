@@ -27,8 +27,10 @@ struct tcp_server_struct
 	struct pbuf* p;
 };
 
+struct tcp_server_struct *esTx = 0;
+struct tcp_pcb *pcbTx = 0;
 
-
+void ethernet_send(char *buf , int len);
 static err_t tcp_server_accept(void* arg, struct tcp_pcb* newpcb, err_t err);
 static err_t tcp_server_recv(void* arg, struct tcp_pcb* newpcb, struct pbuf* p, err_t err);
 static void tcp_server_error(void *arg, err_t err);
@@ -39,7 +41,6 @@ static void tcp_server_send(struct tcp_pcb *tpcb, struct tcp_server_struct *es);
 static void tcp_server_connection_close(struct tcp_pcb *tpcb, struct tcp_server_struct *es);
 
 static void tcp_server_handle(struct tcp_pcb* tpcb, struct tcp_server_struct* es);
-
 
 void tcp_server_init(void)
 {
@@ -333,88 +334,99 @@ static err_t tcp_server_poll(void *arg, struct tcp_pcb *tpcb)
 	return ret_err;
 }
 
+
 static void tcp_server_handle (struct tcp_pcb *tpcb, struct tcp_server_struct *es)
 {
-	char *recv;
-
-	/*save recieved string into recv */
-	recv= (char*) es->p->payload;
-	pbuf_free(es->p);
-
-	char buf1[100];
-	int len1 = sprintf(buf1, " Hello from server\n");
-
-	/* allocate pbuf from RAM*/
-	struct pbuf *txBuf1 = pbuf_alloc(PBUF_TRANSPORT, len1, PBUF_RAM);
-
-	/* copy the data into the buffer  */
-	pbuf_take(txBuf1, buf1, len1);
-
-	/* copy the Tx buffer into the buffer  */
-	es->p=txBuf1;
-
-	/* send the TX buffer  */
-	tcp_server_send(tpcb,es);
-
-	/* delete the TX buffer  */
-	pbuf_free(txBuf1);
-	pbuf_free(es->p);
+	esTx = es;
+	pcbTx = tpcb;
 
 ///////////////////////* start of my test area *///////////////////////
-	if( !strcmp(recv,"red") )
+	if( !strcmp(es->p->payload,"red") )
 	{
 		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_14);
+
+		char buf1[100];
+		int len1 = sprintf(buf1, " Hello from server\n");
+
+		/* allocate pbuf from RAM*/
+		es->p = pbuf_alloc(PBUF_TRANSPORT, len1, PBUF_RAM);
+
+		/* copy the data into the buffer  */
+		pbuf_take(es->p, buf1, len1);
+
+		/* send the TX buffer  */
+		tcp_server_send(tpcb,es);
+
+		/* delete the TX buffer  */
+		pbuf_free(es->p);
 	}
-	if(  !strcmp(recv,"blue") )
+
+	if(  !strcmp(es->p->payload,"blue") )
 	{
 		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_7);
+
+		char buf1[100];
+		int len1 = sprintf(buf1, " Hello from server\n");
+
+		/* allocate pbuf from RAM*/
+		es->p = pbuf_alloc(PBUF_TRANSPORT, len1, PBUF_RAM);
+
+		/* copy the data into the buffer  */
+		pbuf_take(es->p, buf1, len1);
+
+		/* send the TX buffer  */
+		tcp_server_send(tpcb,es);
+
+		/* delete the TX buffer  */
+		pbuf_free(es->p);
 	}
-	if(  !strcmp(recv,"yellow") )
+
+	if(  !strcmp(es->p->payload,"yellow") )
 	{
 		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0);
+
+		char buf1[100];
+		int len1 = sprintf(buf1, " Hello from server\n");
+
+		/* allocate pbuf from RAM*/
+		es->p = pbuf_alloc(PBUF_TRANSPORT, len1, PBUF_RAM);
+
+		/* copy the data into the buffer  */
+		pbuf_take(es->p, buf1, len1);
+
+		/* send the TX buffer  */
+		tcp_server_send(tpcb,es);
+
+		/* delete the TX buffer  */
+		pbuf_free(es->p);
 	}
-	if(  !strcmp(recv,"data") )
+
+	if(  !strcmp(es->p->payload,"data") )
 	{
-
-			/* allocate pbuf from RAM*/
-			struct pbuf *txBuf = pbuf_alloc(PBUF_TRANSPORT, SendBufLength, PBUF_RAM);
-
-			/* copy the data into the buffer  */
-			pbuf_take(txBuf, SendBuf, SendBufLength);
-
-			/* copy the Tx buffer into the buffer  */
-			es->p=txBuf;
-
-			/* send the TX buffer  */
-			tcp_server_send(tpcb,es);
-
-			/* free the TX buffer  */
-			pbuf_free(txBuf);
-
-			/*free pcb pbuf */
-			pbuf_free(es->p);
+		ethernet_send( (char *) SendBuf , 50000);
 	}
-//	if(  !strcmp(recv,"halfdata") )
-//	{
-//
-//			/* allocate pbuf from RAM*/
-//			struct pbuf *txBuf2 = pbuf_alloc(PBUF_TRANSPORT, HalfSendBufLength, PBUF_RAM);
-//
-//			/* copy the data into the buffer  */
-//			pbuf_take(txBuf2, SendBuf, HalfSendBufLength);
-//
-//			/* copy the Tx buffer into the buffer  */
-//			es->p=txBuf2;
-//
-//			/* send the TX buffer  */
-//			tcp_server_send(tpcb,es);
-//
-//			/* free the TX buffer  */
-//			pbuf_free(txBuf2);
-//
-//			/*free pcb pbuf */
-//			pbuf_free(es->p);
-//	}
+
+	if(  !strcmp(es->p->payload,"data2") )
+	{
+		ethernet_send( (char *) SendBuf , 50000);
+	}
+
+	if(  !strcmp(es->p->payload,"data3") )
+	{
+		ethernet_send( (char *) SendBuf , 50000);
+	}
 
 }
 
+void ethernet_send(char *buf , int len)
+{
+	/* allocate pbuf */
+	esTx->p = pbuf_alloc(PBUF_TRANSPORT, len , PBUF_RAM);
+
+	/* copy data to pbuf */
+	pbuf_take(esTx->p, (char*)buf, len);
+
+	tcp_server_send(pcbTx, esTx);
+
+	pbuf_free(esTx->p);
+}

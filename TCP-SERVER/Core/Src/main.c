@@ -50,7 +50,7 @@ extern struct netif gnetif;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 /* USER CODE BEGIN PFP */
-char SendBuf[SendBufLength];
+char SendBuf[SendBufLength] __attribute__((section("ccmram")));
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
