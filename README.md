@@ -11,9 +11,9 @@
 5)Click listen then test it and enjoy .\
 6)If you send words :\
   a) "data" : the server replies with 50kb of data statically defined with a pointer for testing.\
-  a) "red" : the server replies with small msg and red led is toggled.\
-  a) "blue" : the server replies with small msg and blue led is toggled.\
-  a) "yellow" :the server replies with small msg and yellow led is toggled.
+  b) "red" : the server replies with small msg and red led is toggled.\
+  c) "blue" : the server replies with small msg and blue led is toggled.\
+  d) "yellow" :the server replies with small msg and yellow led is toggled.
 
 # Output ?
 -You should see same message " <ur msg> messsge from server".
