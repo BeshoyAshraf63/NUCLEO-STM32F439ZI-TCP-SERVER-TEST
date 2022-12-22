@@ -1,7 +1,7 @@
 # NUCLEO-STM32F439ZI-TCP-SERVER-LwIP-TEST
 -This is an application design to send data/recieve to TCP client by using LwIP stack.\
 -SERVER is your (board) of address 192.168.1.7 and port number=7.\
--CLIENT is the (Laptop/PC) of address 192.168.1.6 and port number=8.\
+-CLIENT is the (Laptop/PC) of address 192.168.1.6 and port number=8.
 
 # How to use ?
 1)Statically set IP address of your Laptop/PC to 192.168.1.6.\
@@ -13,8 +13,8 @@
   a) "data" : the server replies with 50kb of data statically defined with a pointer for testing.\
   a) "red" : the server replies with small msg and red led is toggled.\
   a) "blue" : the server replies with small msg and blue led is toggled.\
-  a) "yellow" :the server replies with small msg and yellow led is toggled.\
+  a) "yellow" :the server replies with small msg and yellow led is toggled.
 
 # Output ?
--You should see same message " <ur msg> messsge from server".\
+-You should see same message " <ur msg> messsge from server".
 
